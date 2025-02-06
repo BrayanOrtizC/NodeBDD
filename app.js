@@ -1,6 +1,6 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes.js";
-import productRoute from "./routes/clienteRoute.js";
+import clienteRoute from "./routes/clienteRoute.js";
 
 import cors from 'cors';
 
@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api', userRoutes);
-app.use('/api/clientes', productRoute);
+app.use('/api/clientes', clienteRoute);
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5000;
