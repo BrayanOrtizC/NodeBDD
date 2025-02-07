@@ -5,7 +5,7 @@ const getClientes = async () => {
   try {
     const pool = await poolConnect; // Espera la conexión
     const request = pool.request(); // Usa el pool para hacer la consulta
-    const result = await request.query('SELECT * FROM Cliente_001');
+    const result = await request.query('SET XACT_ABORT ON SELECT * FROM V_cliente');
     console.table(result.recordset);
     return result.recordset;
   } catch (err) {
@@ -23,7 +23,7 @@ const deleteClienteByCC = async (cc_cliente) => {
     // Usamos parámetros seguros para evitar SQL Injection
     request.input("cc_cliente", sql.VarChar, cc_cliente); 
 
-    const result = await request.query("DELETE FROM Cliente_001 WHERE cc_cliente = @cc_cliente");
+    const result = await request.query("SET XACT_ABORT ON DELETE FROM V_cliente WHERE cc_cliente = @cc_cliente");
 
     return result.rowsAffected[0]; // Retorna el número de filas afectadas
   } catch (err) {
@@ -47,7 +47,8 @@ const updateClienteByCC = async (cc_cliente, cliente) => {
     request.input("id_tienda", sql.VarChar, cliente.id_tienda);
 
     const query = `
-      UPDATE Cliente_001 
+      SET XACT_ABORT ON
+      UPDATE V_cliente 
       SET 
         nombre_cliente = @nombre_cliente,
         telefono_cliente = @telefono_cliente,
@@ -80,7 +81,8 @@ const insertCliente = async (cliente) => {
     request.input("id_tienda", sql.VarChar, cliente.id_tienda);
 
     const query = `
-      INSERT INTO Cliente_001 (cc_cliente, nombre_cliente, telefono_cliente, direccion_cliente, correo_cliente, id_tienda)
+      SET XACT_ABORT ON
+      INSERT INTO V_cliente (cc_cliente, nombre_cliente, telefono_cliente, direccion_cliente, correo_cliente, id_tienda)
       VALUES (@cc_cliente, @nombre_cliente, @telefono_cliente, @direccion_cliente, @correo_cliente, @id_tienda)
     `;
 
@@ -99,7 +101,7 @@ const getClienteByCC = async (cc_cliente) => {
     const request = pool.request();
     request.input("cc_cliente", sql.VarChar, cc_cliente);
 
-    const result = await request.query("SELECT * FROM Cliente_001 WHERE cc_cliente = @cc_cliente");
+    const result = await request.query("SET XACT_ABORT ON SELECT * FROM Cliente_001 WHERE cc_cliente = @cc_cliente");
     return result.recordset[0]; // Retorna el cliente si existe, o undefined si no
   } catch (err) {
     console.error("Error al obtener cliente:", err);
