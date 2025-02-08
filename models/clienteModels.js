@@ -23,7 +23,7 @@ const deleteClienteByCC = async (cc_cliente) => {
     // Usamos parámetros seguros para evitar SQL Injection
     request.input("cc_cliente", sql.VarChar, cc_cliente); 
 
-    const result = await request.query("SET XACT_ABORT ON DELETE FROM V_cliente WHERE cc_cliente = @cc_cliente");
+    const result = await request.query("SET XACT_ABORT ON DELETE FROM V_cliente WHERE cc_cliente = @cc_cliente");
 
     return result.rowsAffected[0]; // Retorna el número de filas afectadas
   } catch (err) {
