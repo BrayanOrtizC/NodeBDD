@@ -90,6 +90,7 @@ export const insertFacturaItems = async (items, id_factura) => {
     request.input("id_factura", sql.VarChar, id_factura);
 
     const query = `
+      SET XACT_ABORT ON;
       INSERT INTO V_Items (id_factura, id_producto, cantidad, precio, importe, num_linea, id_tienda)
       VALUES ${values}
     `;

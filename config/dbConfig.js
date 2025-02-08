@@ -3,8 +3,8 @@ import sql from "mssql";
 const poolConnect = sql.connect({
   user: 'sa',
   password: 'P@ssw0rd',
-  server: 'WINDOWSPRE',
-  database: 'Tienda_UIO',
+  server: 'OZZYJAMES',
+  database: 'Tienda_GYE',
   options: {
     encrypt: true, // True si usas Azure
     trustServerCertificate: true, // Si usas certificados locales
